@@ -19,12 +19,9 @@ class Users
   def check_login_password?(login,password)
     if @login == login && @password ==  password
       return true
-
     else
-
       return false
     end
-
   end
 
 end
