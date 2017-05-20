@@ -1,30 +1,30 @@
 class Flights
   attr_reader :departure_city, :arrival_city,:tickets,:date_departure,:date_arrival,:price,:tickets,:customers
   def initialize(departure_city, arrival_city,price,date_departure,date_arrival,seats)
-    @departure_city=departure_city
-    @arrival_city=arrival_city
-    @price=price
-    @date_departure=date_departure#=Time.mktime(date_departure)
-    @date_arrival=date_arrival
-    @tickets=Array.new(15)
-    @customers=Array.new
-    @seats=seats
+    @departure_city = departure_city
+    @arrival_city = arrival_city
+    @price = price
+    @date_departure = date_departure
+    @date_arrival = date_arrival
+    @tickets = Array.new(15)
+    @customers = Array.new
+    @seats = seats
     create_ticket
-    @sold_ticket=Array.new
+    @sold_ticket = Array.new
   end
 
   def show_flight
-    puts "Departure_city: "+@departure_city.to_s
-    puts 'Arrival_city: '+@arrival_city.to_s
-    puts 'Price: '+@price.to_s
-    puts 'Seats: '+@seats.to_s
-    puts 'Date_departure: '+@date_departure.to_s
-    puts 'Date_arrival: '+@date_arrival.to_s+"\n"
+    puts "Departure_city: " + @departure_city.to_s
+    puts 'Arrival_city: ' + @arrival_city.to_s
+    puts 'Price: ' + @price.to_s
+    puts 'Seats: ' + @seats.to_s
+    puts 'Date_departure: '+  @date_departure.to_s
+    puts 'Date_arrival: ' + @date_arrival.to_s+"\n"
   end
 
   def show_customers
     @customers.each do |customer|
-      puts 'name: '+customer.to_s
+      puts 'name: '+ customer.to_s
     end
   end
 
@@ -36,7 +36,7 @@ class Flights
 
 
   def check_ticket?(ticket)
-    if @tickets[ticket] != true && @tickets.length-1 < ticket && ticket>=0
+    if @tickets[ticket] != true && @tickets.length > ticket && ticket>=0
       return true
     else
       return false
@@ -55,10 +55,10 @@ class Flights
 
   def sold_ticket?
     @tickets.each do |ticket|
-      if ticket!=true
-        return true
-      else
+      if ticket == true
         return false
+      else
+        return true
       end
     end
   end

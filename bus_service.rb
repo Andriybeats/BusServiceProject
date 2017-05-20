@@ -1,23 +1,23 @@
 class BusService
   def initialize
-    @flights=Array.new
-    @bought_ticket=Array.new
+    @flights = Array.new
+    @bought_ticket = Array.new
   end
 
   def add_flight
     printf "\nInput\nDeparture city: "
-    @departure_city=gets.chomp
+    @departure_city = gets.chomp
     printf "City of arrival: "
-    @arrival_city=gets.chomp
+    @arrival_city = gets.chomp
     printf "Price: "
-    @price=gets.to_i
+    @price = gets.to_i
     printf "Date departure: "
-    @departure_date=Time.mktime(gets)
+    @departure_date = Time.mktime(gets)
     printf "Date of arrival: "
-    @arrival_date=Time.mktime(gets)
+    @arrival_date = Time.mktime(gets)
     printf "Seats: "
-    @seats=gets.chomp.to_i
-    @flight=Flights.new(@departure_city,@arrival_city,@price,@departure_date,@arrival_date,@seats)
+    @seats = gets.chomp.to_i
+    @flight = Flights.new(@departure_city,@arrival_city,@price,@departure_date,@arrival_date,@seats)
     @flights.push(@flight)
   end
 
@@ -35,15 +35,14 @@ class BusService
 
   def del_flight
     puts "\nInput number of flight:"
-    @number=gets.to_i
-    if @flights.length>@number&&@number>=0
-      if @flights[@number].sold_ticket?
+    @number = gets.to_i
+    if @flights.length > @number && @number >= 0
+      if @flights[@number].customers.empty?
         @flights.delete_at(@number)
         puts "Flight deleted"
       else
         puts 'Tickets is realized, you can`t delete flight`'
       end
-
     else
       puts "Wrong number of flight!"
     end
@@ -52,11 +51,11 @@ class BusService
   def update_flight
     puts "Input number of flight:"
     @number=gets.to_i
-    if @flights.length>@number&&@number>=0
-      if  @flights[@number].sold_ticket?
+    if @flights.length > @number&&@number >= 0
+      if  @flights[@number].customers.empty?
         @flights.delete_at(@number)
         add_flight
-        @flight=@flights[@flights.length-1]
+        @flight = @flights[@flights.length-1]
         @flights.pop
         @flights.insert(@number,@flight)
         puts "Flight updated"
@@ -98,7 +97,7 @@ class BusService
 
     end
 
-    if @flag==false
+    if @flag == false
       puts "Not founded"
     end
 
@@ -115,7 +114,7 @@ class BusService
 
     end
 
-    if @flag==false
+    if @flag == false
       puts "Not founded"
     end
 
@@ -126,10 +125,10 @@ class BusService
       puts "\n Not any flights "
     else
     puts "\nInput number of flight:"
-    @number_flight=gets.to_i
+    @number_flight = gets.to_i
     if @flights.length > @number_flight && @number_flight >= 0
       puts "\nInput number of seat:"
-      @seat=gets.to_i
+      @seat = gets.to_i
       if @flights[@number_flight].check_ticket?(@seat)
         @flights[@number_flight].buy_ticket(@seat)
         @bought_ticket.push(@flights[@number_flight])
@@ -138,27 +137,22 @@ class BusService
         puts 'You can`t buy this ticket'
         return
       end
-
     else
       puts "Wrong value"
     end
-
     end
-
   end
 
   def show_sold_tickets
     @flights.each do |flight|
-      puts "Number of flight:"+@flights.index(flight).to_s
+      puts "Number of flight:" + @flights.index(flight).to_s
       if flight.customers.empty?
       puts "Not sold any tickets "
       else
         flight.show_customers
         puts
       end
-
     end
-
   end
 
   def show_bought_tickets
@@ -171,7 +165,5 @@ class BusService
       end
     end
   end
-
-
 
 end
